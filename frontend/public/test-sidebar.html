@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Navigation Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0a0a0b;
+            color: #fafafa;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 256px;
+            background: #1a1a1b;
+            border-right: 1px solid #2a2a2b;
+            padding: 16px;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 4px;
+            background: transparent;
+            color: #a0a0a0;
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .nav-item:hover {
+            background: #2a2a2b;
+            color: #fafafa;
+        }
+        
+        .nav-item.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+        }
+        
+        .main-content {
+            margin-left: 256px;
+            padding: 32px;
+            flex: 1;
+        }
+        
+        .status {
+            padding: 16px;
+            background: #2a2a2b;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .test-result {
+            margin-top: 8px;
+            padding: 8px;
+            background: #1a1a1b;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+            background: #818cf8;
+            border-radius: 4px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2 style="color: #fafafa; margin-bottom: 24px; font-size: 18px;">Navigation Test</h2>
+            
+            <a href="/dashboard" class="nav-item active" onclick="handleClick(event, 'Dashboard')">
+                <div class="icon"></div>
+                <span>Dashboard</span>
+            </a>
+            
+            <a href="/new" class="nav-item" onclick="handleClick(event, 'New Analysis')">
+                <div class="icon"></div>
+                <span>New Analysis</span>
+            </a>
+            
+            <a href="/library" class="nav-item" onclick="handleClick(event, 'Library')">
+                <div class="icon"></div>
+                <span>Creative Library</span>
+            </a>
+            
+            <a href="/dna" class="nav-item" onclick="handleClick(event, 'DNA')">
+                <div class="icon"></div>
+                <span>Creative DNA</span>
+            </a>
+            
+            <a href="/performance" class="nav-item" onclick="handleClick(event, 'Performance')">
+                <div class="icon"></div>
+                <span>Performance</span>
+            </a>
+            
+            <button class="nav-item" onclick="handleButtonClick('Button Test')">
+                <div class="icon"></div>
+                <span>Button Test</span>
+            </button>
+        </div>
+        
+        <div class="main-content">
+            <h1 style="margin-bottom: 16px;">Sidebar Click Test</h1>
+            
+            <div class="status">
+                <strong>Instructions:</strong>
+                <p style="margin-top: 8px; color: #a0a0a0;">
+                    Try clicking on the sidebar items to the left. This is a pure HTML/CSS/JS test 
+                    with no React or Next.js - if these don't work, it's a browser issue.
+                </p>
+            </div>
+            
+            <div class="status">
+                <strong>Click Log:</strong>
+                <div id="clickLog" class="test-result">No clicks yet...</div>
+            </div>
+            
+            <div class="status">
+                <strong>Tests:</strong>
+                <ul style="margin-top: 8px; color: #a0a0a0; padding-left: 20px;">
+                    <li>✓ Links use standard &lt;a&gt; tags</li>
+                    <li>✓ Button uses &lt;button&gt; tag</li>
+                    <li>✓ All have cursor: pointer</li>
+                    <li>✓ All have onclick handlers</li>
+                    <li>✓ Sidebar has z-index: 100</li>
+                </ul>
+            </div>
+            
+            <div class="status">
+                <strong>What to check:</strong>
+                <ul style="margin-top: 8px; color: #a0a0a0; padding-left: 20px;">
+                    <li>Does your cursor change to a pointer when hovering over sidebar items?</li>
+                    <li>Do you see the hover effect (background color change)?</li>
+                    <li>Does clicking update the "Click Log" above?</li>
+                    <li>Can you click anywhere on the item or just specific parts?</li>
+                </ul>
+            </div>
+            
+            <div class="status">
+                <strong>Browser Info:</strong>
+                <div class="test-result" id="browserInfo"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let clickCount = 0;
+        const log = document.getElementById('clickLog');
+        const logEntries = [];
+        
+        function handleClick(event, itemName) {
+            event.preventDefault(); // Prevent navigation for testing
+            clickCount++;
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] Click #${clickCount}: ${itemName}`;
+            logEntries.unshift(entry);
+            log.textContent = logEntries.slice(0, 10).join('\n');
+            console.log(entry);
+        }
+        
+        function handleButtonClick(itemName) {
+            clickCount++;
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] Click #${clickCount}: ${itemName}`;
+            logEntries.unshift(entry);
+            log.textContent = logEntries.slice(0, 10).join('\n');
+            console.log(entry);
+        }
+        
+        // Display browser info
+        document.getElementById('browserInfo').textContent = 
+            `User Agent: ${navigator.userAgent}\n` +
+            `Platform: ${navigator.platform}\n` +
+            `Screen: ${window.screen.width}x${window.screen.height}\n` +
+            `Window: ${window.innerWidth}x${window.innerHeight}`;
+            
+        console.log('Test page loaded - sidebar should be clickable!');
+    </script>
+</body>
+</html>

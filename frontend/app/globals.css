@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  /* Root variables */
+  :root {
+    --background: #0a0a0b;
+    --foreground: #fafafa;
+  }
+
+  /* Base styles */
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-text-primary antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' 32;
+  }
+
+  /* Improved focus states */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-background;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Custom scrollbar for dark theme */
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    @apply bg-surface-secondary;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    @apply bg-border-secondary rounded-full;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    @apply bg-border-tertiary;
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-surface/80 backdrop-blur-xl border border-border;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  /* Button transitions */
+  .btn-transition {
+    @apply transition-all duration-200 active:scale-95;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent;
+  }
+
+  /* Metric number styling with tabular nums */
+  .metric-number {
+    @apply font-mono tabular-nums;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-shake {
+    animation: shake 0.5s;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Delay utilities */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-700 {
+    animation-delay: 700ms;
+  }
+
+  /* Noise texture overlay */
+  .noise-bg {
+    position: relative;
+  }
+
+  .noise-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .noise-bg > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+/* Remove default transitions from specific elements */
+input, textarea, select {
+  transition: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  @apply transition-all duration-200;
+}
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

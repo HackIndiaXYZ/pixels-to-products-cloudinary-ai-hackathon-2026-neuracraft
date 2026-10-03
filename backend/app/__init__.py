@@ -1,0 +1,1 @@
+"""CreativePulse AI Backend Application"""
